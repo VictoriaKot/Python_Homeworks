@@ -19,13 +19,9 @@ print("\n=== ВПРАВА 2: Перевірка паролю ===")
 # print("Створіть систему перевірки паролю")
 # print("Пароль повинен містити принаймні 8 символів")
 password = str(input("Введіть пароль: "))
-while True: 
-    if len(password) < 8:
+while len(password) < 8:
         print('Пароль має менше 8 символів')
-    else: 
-        print('Пароль встановлено!')
-        break
-    password = input('Ввведіть ще раз пароль: ')
+        password = input('Ввведіть ще раз пароль: ')
 
 # # Вправа 3: Визначення високосного року
 print("\n=== ВПРАВА 3: Високосний рік ===")
@@ -47,9 +43,8 @@ print("Підрахуйте кількість голосних у рядку")
 text = input("Введіть текст українською мовою: ").lower()
 vowels = "аеиіїоуюя"
 count = 0
-for char in text:
-    if char in vowels:
-        count += 1
+for char in vowels:
+    count =+ text.count(char)
 if count > 0:
     print(f"Кількість голосних: {count}")
 else:
@@ -111,7 +106,7 @@ while True:
     number_list = numbers.split(' ')
     max_number = max(number_list)
     if numbers == '0':
-            break
+        break
     print(max_number)
 
                    
