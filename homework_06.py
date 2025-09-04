@@ -103,7 +103,7 @@ print("Знайдіть найбільше число серед введени�
 print("Введіть 0 для завершення")
 while True:
     numbers = input('Введіть декілька чисел через пробіл або 0 для завершення: ')
-    number_list = numbers.split(' ')
+    number_list = [int(x) for x in numbers.split(' ')]
     max_number = max(number_list)
     if numbers == '0':
         break
