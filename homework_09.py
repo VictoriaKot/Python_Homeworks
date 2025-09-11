@@ -37,7 +37,7 @@ def sum_of_two_digits(a,b):
     return a+b
 sum = sum_of_two_digits(7,9)
 print(sum)
-    
+
 
 # task 3
 """  Написати функцію, яка розрахує середнє арифметичне списку чисел.
@@ -69,8 +69,8 @@ def longest_word(text):
 my_list = ['banana', 'monkey', 'tree', 'condition']
 find_longest_word = longest_word(my_list)
 print (f'The longest word in the list {my_list} is {find_longest_word}')
-    
-    
+
+
 # task 6
 """  Написати функцію, яка приймає два рядки та повертає індекс першого входження другого рядка
 у перший рядок, якщо другий рядок є підрядком першого рядка, та -1, якщо другий рядок
@@ -87,6 +87,11 @@ str1 = "The quick brown fox jumps over the lazy dog"
 str2 = "cat"
 print(find_substring(str1, str2)) # поверне -1
 
+
+"""  Оберіть будь-які 4 таски з попередніх домашніх робіт та
+перетворіть їх у 4 функції, що отримують значення та повертають результат.
+Обов'язково документуйте функції та дайте зрозумілі імена змінним.
+"""
 # task 7
 def checkig_leap_year(year):  #функція по перевірці високоснго року
     if (year%4==0 and year%100!=0) or year%400==0:
@@ -110,18 +115,14 @@ new_ingredients = input('Введіть інгредієнт або quit для 
 pepperoni_pizza = cooking_pizza(new_ingredients)
 print(f'Пеппероні піца з такими інгредієнтами {new_ingredients} готова')
 # task 9
-"""Це провал! Функція не виводить найбільше значення"""
-def max_value_finder(): #знайти найбільше число з введених
-    while True:
-        numbers = input('')
-        number_list = list(map(int, numbers.split(" ")))
-        max_number = max(number_list)
-        if numbers == '0':
-            break
-    return(max_number)
-my_list = input('Введіть декілька чисел через пробіл або 0 для закінчуння: ')
-my_max_number = max_value_finder(my_list)
-print(f'максимальне число зі списку {my_list}: {my_max_number}')
+""" Функція виводить найбільше значення зі списку"""
+def max_value_finder(my_list): #знайти найбільше число з введених
+        max_number = max(my_list)
+        return(max_number)
+    
+my_list1 = [5,8,9,34,56,32]
+my_max_number = max_value_finder(my_list1)
+print(f'максимальне число зі списку {my_list1}: {my_max_number}')
 
 # task 10
 def total_of_sets (set_1,set_2):   # Функція обєднує 2 сети в один
@@ -131,11 +132,3 @@ my_set = {'cheese', 'bread', 'meat', 'fish', 'tomato'}
 friends_set = {'cheese', 'tomato', 'cucumbers'} 
 our_list_products = total_of_sets(my_set,friends_set) 
 print(f'На природу беремо: {our_list_products}')
-  
-    
-"""  Оберіть будь-які 4 таски з попередніх домашніх робіт та
-перетворіть їх у 4 функції, що отримують значення та повертають результат.
-Обов'язково документуйте функції та дайте зрозумілі імена змінним.
-"""
-
-        
