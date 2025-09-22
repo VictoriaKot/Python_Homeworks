@@ -33,12 +33,8 @@ class Tree:
         - Встановити атрибути через властивості для валідації
         - Обчислити початкову кількість листя
         """
-
-        self._height = height
-        self._trunk_diameter = trunk_diameter
-    
-
-    
+        self.__height = height
+        self.__trunk_diameter = trunk_diameter
     @property
     def height(self):
         """
@@ -46,7 +42,8 @@ class Tree:
         
         TODO: Повернути значення приватного атрибута _height
         """
-        return self._height
+        return self.__height
+    
     @height.setter
     def height(self, value):
         """
@@ -60,8 +57,10 @@ class Tree:
         """
         if not isinstance(value,(int,float)) or 150< value <0:
             raise ValueError("Висота дерева має бути між 1 і 150 метрів")
-        self._height = value    
-       
+        else:
+            self.__height = value    
+            self.__leaf_count = self.__height * self.__trunk_diameter * 100
+      
     
     @property
     def trunk_diameter(self):
@@ -70,7 +69,7 @@ class Tree:
         
         TODO: Повернути значення приватного атрибута _trunk_diameter
         """
-        return self._trunk_diameter
+        return self.__trunk_diameter
     
     @trunk_diameter.setter
     def trunk_diameter(self, value):
@@ -83,11 +82,12 @@ class Tree:
         - Перерахувати кількість листя
         - Викинути ValueError при неправильному значенні
         """
-        if not isinstance(value, float) or 1000< value < 0:
+        if not isinstance(value, (int, float)) or not 0 < value < 1000:
             raise ValueError("Невірний діаметр стовбура")
-        else:
-            self._trunk_diameter = value
-    
+        self.__trunk_diameter = value
+        self.__leaf_count = self.__height * self.__trunk_diameter * 100
+        print (f"Діаметр стовбура: {self.__trunk_diameter} і листя {self.__leaf_count}") 
+       
     @property
     def leaf_count(self):
         """
@@ -95,7 +95,7 @@ class Tree:
         
         TODO: Повернути значення _leaf_count
         """
-        pass
+        print(f"Це дерево має {self.__leaf_count} листя.")
       
     
     def _calculate_leaf_count(self):
@@ -108,9 +108,9 @@ class Tree:
         - Обчислити кількість листя за формулою
         - Повернути результат
         """
-        leaf_count = self._height*self._trunk_diameter*100
-       
-        return leaf_count
+        self.__leaf_count = self.__height * self.__trunk_diameter * 100
+        return self.__leaf_count
+    
     def grow(self):
         """
         Метод: ріст дерева / Method: tree growth
@@ -121,15 +121,16 @@ class Tree:
         - Використовувати властивості для автоматичного перерахунку листя
         - Вивести повідомлення про ріст
         """
-        new_height = self._height + 0.5
+        new_height = self.__height + 0.5
         if new_height > 149.9:
             return "Дерево зависоке"
         
-        new_trunk_diameter = self._trunk_diameter + 2
+        new_trunk_diameter = self.__trunk_diameter + 2
         if new_trunk_diameter > 99.9:
             return "Дерево широке"
-        new_leaf_calc = new_height*new_trunk_diameter*100
-        return f"Дерево виросло {new_height} метрів в висоту {new_trunk_diameter} вшир і має {new_leaf_calc} листя"    
+        new_leaf_calc = new_height * new_trunk_diameter * 100
+        print(f"Дерево виросло {new_height} метрів в висоту {new_trunk_diameter} вшир і має {new_leaf_calc} листя")  
+        
     def leaf_fall(self):
         """
         Метод: опадання листя / Method: leaf fall
@@ -139,7 +140,7 @@ class Tree:
         - Вивести повідомлення про опадання
         """
         fall = self._calculate_leaf_count()* 0.7
-        return f"Листя опало і тепер на дереві {fall} листочків"
+        print( f"Листя опало і тепер на дереві {fall} листочків")
     
     def get_info(self):
         """
@@ -149,7 +150,7 @@ class Tree:
         - Повернути форматований рядок з усією інформацією
         - Включити висоту, діаметр стовбура, кількість листя
         """
-        return f"Дерево заввишки {self._height}, {self._trunk_diameter} см вшир і має листя {self._calculate_leaf_count()}"
+        return f"Дерево заввишки {self.__height}, {self.__trunk_diameter} см вшир і має листя {self._calculate_leaf_count()}"
 
 class Kettle:
     """
@@ -176,10 +177,10 @@ class Kettle:
         - Ініціалізувати water_temperature = 20
         - Ініціалізувати is_on = False
         """
-        self._volume = volume   
-        self._current_volume = 0
-        self._water_temperature = 20
-        self._is_on = False
+        self.__volume = volume   
+        self.__current_volume = 0
+        self.__water_temperature = 20
+        self.__is_on = False
     @property
     def volume(self):
         """
@@ -187,7 +188,7 @@ class Kettle:
         
         TODO: Повернути _volume
         """
-        return self._volume
+        return self.__volume
     
     @volume.setter
     def volume(self, value):
@@ -202,7 +203,7 @@ class Kettle:
         if not isinstance(value,(int,float)) or 0.5 <= value <= 5:
             raise ValueError("Невірний об'єм чайника")
         else:
-            self._volume = value    
+            self.__volume = value    
     
     @property
     def current_volume(self):
@@ -211,7 +212,7 @@ class Kettle:
         
         TODO: Повернути _current_volume
         """
-        return self._current_volume
+        return self.__current_volume
     
     @property
     def water_temperature(self):
@@ -220,7 +221,7 @@ class Kettle:
         
         TODO: Повернути _water_temperature
         """
-        return self._water_temperature
+        return self.__water_temperature
     
     @property
     def is_on(self):
@@ -229,7 +230,7 @@ class Kettle:
         
         TODO: Повернути _is_on
         """
-        return self._is_on
+        return self.__is_on
     
     def pour_water(self, amount):
         """
@@ -247,14 +248,14 @@ class Kettle:
         """
         if amount < 0:
             return "Кількість води має бути невід'ємною"
-        water_to_add = min(amount, self.volume - self._current_volume)
+        water_to_add = min(amount, self.__volume - self.__current_volume)
         if water_to_add <= 0:
             return "Чайник вже повний!"
-        self._current_volume += water_to_add
+        self.__current_volume += water_to_add
         if water_to_add < amount:
             print(f"Додано лише {water_to_add} л води, чайник переповнений!")
         else:
-            print(f"Додано {water_to_add} л води. Поточний об'єм: {self._current_volume} л")
+            print(f"Додано {water_to_add} л води. Поточний об'єм: {self.__current_volume} л")
            
     
     def drain_water(self, amount):
@@ -271,7 +272,7 @@ class Kettle:
         """
         if amount <0:
             print('неможливо злити відємну кількість води')
-            water_left = self._current_volume - amount
+            water_left = self.__current_volume - amount
         if water_left <0:
              water_left = 0
         return f"З чайника злили {amount} літрів води і залишилось в ньому {water_left}"
@@ -286,10 +287,10 @@ class Kettle:
         - Вивести повідомлення про включення
         - Якщо води немає - вивести попередження
         """
-        if self._current_volume > 0:
-            self._is_on = True
-            self._water_temperature = 100
-            print (f"Чайник нагрівається {self._is_on}і темпетратура втсановлена {self._water_temperature}")
+        if self.__current_volume > 0:
+            self.__is_on = True
+            self.__water_temperature = 100
+            print (f"Чайник нагрівається {self.__is_on}і темпетратура втсановлена {self.__water_temperature}")
         else: 
             print ("Води в чайнику нема")
     def turn_off(self):
@@ -300,7 +301,7 @@ class Kettle:
         - Встановити is_on = False
         - Вивести повідомлення про вимкнення
         """
-        self._is_on = False
+        self.__is_on = False
         print ("Чайник нагрівся і вимкнувся")
     def get_status(self):
         """
@@ -310,7 +311,7 @@ class Kettle:
         - Повернути форматований рядок з усією інформацією
         - Включити об'єм, температуру, стан включення
         """
-        return f"В чайнику зараз {self._current_volume}літрів води, температура води: {self._water_temperature} і він вкл:{self._is_on}"
+        return f"В чайнику зараз {self.__current_volume}літрів води, температура води: {self.__water_temperature} і він вкл:{self.__is_on}"
 
 class Cloud:
     """
@@ -337,9 +338,9 @@ class Cloud:
         - Встановити всі атрибути через властивості
         - Обчислити початкову ймовірність дощу
         """
-        self._area = area
-        self._humidity_density = humidity_density
-        self._altitude = altitude
+        self.__area = area
+        self.__humidity_density = humidity_density
+        self.__altitude = altitude
     
     @property
     def area(self):
@@ -348,7 +349,7 @@ class Cloud:
         
         TODO: Повернути _area
         """
-        return self._area
+        return self.__area
     
     @area.setter
     def area(self, value):
@@ -363,7 +364,7 @@ class Cloud:
         if not isinstance(value,(float)) or 10000 <= value <= 1:
             raise ValueError("Невірне значення площі хмари")
         else:
-            self._area = value    
+            self.__area = value    
     
     @property
     def altitude(self):
@@ -372,7 +373,7 @@ class Cloud:
         
         TODO: Повернути _altitude
         """
-        return self._altitude
+        return self.__altitude
     
     @altitude.setter
     def altitude(self, value):
@@ -387,7 +388,7 @@ class Cloud:
         if not isinstance(value,(float)) or 15 <= value <= 0.5:
             raise ValueError("Невірне значення висоти хмари")
         else:
-            self._altitude = value    
+            self.__altitude = value    
     
     @property
     def humidity_density(self):
@@ -396,7 +397,7 @@ class Cloud:
         
         TODO: Повернути _humidity_density
         """
-        return self._humidity_density
+        return self.__humidity_density
     
     @humidity_density.setter
     def humidity_density(self, value):
@@ -412,7 +413,7 @@ class Cloud:
         if not isinstance(value,(float)) or 30 <= value <= 0:
             raise ValueError("Неправильне значення ймвірності дощу")
         else:
-           self._humidity_density = value    
+           self.__humidity_density = value    
     
     @property
     def rain_probability(self):
@@ -421,7 +422,7 @@ class Cloud:
         
         TODO: Повернути _rain_probability
         """
-        pass
+        return self.__rain_probability
     
     
     def _calculate_rain_probability(self):
@@ -434,8 +435,8 @@ class Cloud:
         - Обчислити ймовірність за формулою
         - Повернути результат
         """
-        rain_probability = min(self._humidity_density * 3, 100)
-        return rain_probability
+        self.__rain_probability = min(self.__humidity_density * 3, 100)
+        return self.__rain_probability
     def accumulate_moisture(self, amount):
         """
         Метод: накопичити вологу / Method: accumulate moisture
@@ -452,7 +453,7 @@ class Cloud:
         if not isinstance(amount,(int)) or 0 >= amount >=30:
              raise ValueError ("Невірне значення: занадто волого")
         else:
-           new_humidity = self._humidity_density + amount
+           new_humidity = self.__humidity_density + amount
         print(f"Вологість збільшилась на {amount} % і тепер складає {new_humidity} %")
         
         
@@ -468,7 +469,7 @@ class Cloud:
         """
         is_rain = True
         if self._calculate_rain_probability() > 70:
-            self._humidity_density/2
+            self.__humidity_density/2
             is_rain = True
             print (f"Ймовірність дощу {self._calculate_rain_probability()} %, дощ йде: {is_rain}")
         else:
@@ -487,7 +488,7 @@ class Cloud:
         - Встановити нову висоту через властивість
         - Вивести повідомлення про переміщення
         """
-        self._altitude = new_altitude
+        self.__altitude = new_altitude
         print(f"Нова висота хмари тепер: {new_altitude}")
     
     def get_forecast(self):
@@ -498,7 +499,7 @@ class Cloud:
         - Повернути форматований рядок з усією інформацією
         - Включити площу, висоту, щільність вологи, ймовірність дощу
         """
-        return f"Площа хмари: {self._area} метрів, висота:{self._altitude}, вологість: {self._humidity_density} і ймовірність дощу: {self._calculate_rain_probability()}%"
+        return f"Площа хмари: {self.__area} метрів, висота:{self.__altitude}, вологість: {self.__humidity_density} і ймовірність дощу: {self._calculate_rain_probability()}%"
 
     
 class Aquarium:
@@ -530,12 +531,12 @@ class Aquarium:
         - Встановити всі атрибути через властивості для валідації
         - Порядок важливий: спочатку розміри, потім water_level, потім fish_count
         """
-        self._length = length
-        self._width = width
-        self._height = height
-        self._water_level = water_level
-        self._fish_count = fish_count
-        self._temperature = temperature
+        self.__length = length
+        self.__width = width
+        self.__height = height
+        self.__water_level = water_level
+        self.__fish_count = fish_count
+        self.__temperature = temperature
     
     
     @property
@@ -545,7 +546,7 @@ class Aquarium:
         
         TODO: Повернути _length
         """
-        return self._length
+        return self.__length
     
     @length.setter
     def length(self, value):
@@ -560,7 +561,7 @@ class Aquarium:
         if not isinstance(value,(int,float)) or 200 < value < 10:
             raise ValueError ("Непраивлне значення довжини") 
         else:
-            self._length = value
+            self.__length = value
     
     @property
     def width(self):
@@ -569,7 +570,7 @@ class Aquarium:
         
         TODO: Повернути _width
         """
-        return self._width
+        return self.__width
     
     @width.setter
     def width(self, value):
@@ -584,7 +585,7 @@ class Aquarium:
         if not isinstance(value,(int,float)) or 200 < value < 10:
             raise ValueError ("Непраивлне значення довжини") 
         else:
-            self._width = value
+            self.__width = value
     
     @property
     def height(self):
@@ -593,7 +594,7 @@ class Aquarium:
         
         TODO: Повернути _height
         """
-        return self._height
+        return self.__height
     
     @height.setter
     def height(self, value):
@@ -608,7 +609,7 @@ class Aquarium:
         if not isinstance(value,(int,float)) or 200 < value < 10:
             raise ValueError ("Непраивлне значення довжини") 
         else:
-            self._height = value
+            self.__height = value
         #return self._height
     @property
     def water_level(self):
@@ -617,7 +618,7 @@ class Aquarium:
         
         TODO: Повернути _water_level
         """
-        return self._water_level
+        return self.__water_level
     
     @water_level.setter
     def water_level(self, value):
@@ -629,11 +630,11 @@ class Aquarium:
         - Встановити _water_level = value
         - Викинути ValueError при неправильному значенні
         """
-        if not isinstance(value,(int,float)) or self._height() <= value <= 0:
+        if not isinstance(value,(int,float)) or self.__height() <= value <= 0:
             raise ValueError ("Непраивлне значення для рівня води") 
         else:
-            self._water_leve = value
-        return f"Рівень води в акваріумі {self._water_level}"
+            self.__water_level = value
+        return f"Рівень води в акваріумі {self.__water_level}"
     @property
     def fish_count(self):
         """
@@ -642,7 +643,7 @@ class Aquarium:
         TODO: Повернути _fish_count
         """
         #fish_count = self._fish_count
-        return self._fish_count
+        return self.__fish_count
     
     @fish_count.setter
     def fish_count(self, value):
@@ -656,12 +657,12 @@ class Aquarium:
         - Встановити _fish_count = value
         - Викинути ValueError при неправильному значенні
         """
-        max_number = self._water_level / 5
+        max_number = self.__water_level / 5
         if not isinstance(value,(int)) or  0 >=  value > max_number:
             raise ValueError ("Непраивлне значення кількості риб") 
         else:
-            self._fish_count = value
-        return f"В акваріумі зараз {self._fish_count()} риб"
+            self.__fish_count = value
+        return f"В акваріумі зараз {self.__fish_count()} риб"
     
     @property
     def temperature(self):
@@ -670,7 +671,7 @@ class Aquarium:
         
         TODO: Повернути _temperature
         """
-        return self._temperature
+        return self.__temperature
     
     @temperature.setter
     def temperature(self, value):
@@ -685,7 +686,7 @@ class Aquarium:
         if not isinstance(value,(int,float)) or  18 >=  value >= 30:
             raise ValueError ("Неправильне значення температури") 
         else:
-            self._temperature = value
+            self.__temperature = value
            
     
     @property
@@ -697,7 +698,7 @@ class Aquarium:
         
         TODO: Обчислити та повернути об'єм води
         """
-        water_volume = (self._length * self._width * self._water_level) / 1000
+        water_volume = (self.__length * self.__width * self.__water_level) / 1000
         return water_volume
            
     
@@ -715,14 +716,14 @@ class Aquarium:
         - Перевірити чи кількість риб все ще допустима
         - Вивести повідомлення про додавання води
         """
-        if 0<= level_increase < self._height :
-            self._water_level += level_increase
-            print(f"Додано води {level_increase} і поточний рівень: {self._water_level} ")
+        if 0<= level_increase < self.__height :
+            self.__water_level += level_increase
+            print(f"Додано води {level_increase} і поточний рівень: {self.__water_level} ")
         elif level_increase < 0:
             print ("Замало води")
         else: 
             print ("Невідома помилка")
-        if self._water_level / 5 < 0:
+        if self.__water_level / 5 < 0:
             print ("Води все ще замало")
         #return f"До акваріума додали води і тепер рівень води: {self._water_level}"        
     
@@ -738,11 +739,11 @@ class Aquarium:
         - Повернути True якщо риба додана, False якщо ні
         """
         is_added = True
-        max_number = self._water_level // 5
+        max_number = self.__water_level // 5
         if max_number > 0:
-            while self._fish_count < max_number :   
-                self._fish_count += 1 
-            print(f"Рибу додано: {is_added},  кількість для додавання {self._fish_count}")
+            while self.__fish_count < max_number :   
+                self.__fish_count += 1 
+            print(f"Рибу додано: {is_added},  кількість для додавання {self.__fish_count}")
             return True 
         else:
             print (f"Рибу не додано ")
@@ -760,9 +761,9 @@ class Aquarium:
         - Вивести повідомлення про результат операції
         - Повернути True якщо риба забрана, False якщо риб немає
         """
-        if self._fish_count >0:
-            self._fish_count -=1 
-            print(f"Забрано рибу і залишилось {self._fish_count}")   
+        if self.__fish_count >0:
+            self.__fish_count -=1 
+            print(f"Забрано рибу і залишилось {self.__fish_count}")   
         else:
             print(f"неможливо забрати рибу її там нема")
         
@@ -778,9 +779,9 @@ class Aquarium:
         - Встановити нову температуру через властивість
         - Вивести повідомлення про зміну температури
         """
-        self._temperature = new_temperature
-        print (f"Температура води була змінeна. Поточна становить {new_temperature}")
-        return new_temperature
+        self.__temperature = new_temperature
+        print (f"Температура води була змінeна. Поточна становить {self.__temperature}")
+        return self.__temperature
          
     def inspect(self):
         """
@@ -791,8 +792,8 @@ class Aquarium:
         - Повернути форматований рядок з усією інформацією
         - Включити розміри, рівень води, об'єм, кількість риб, температуру
         """
-        max_fish = self._water_level // 5
-        print (f"Акваріум має {self._water_level} рівень води,висоту {self._height} см, довжину {self._width}см, ширину {self._length}см, максимальну кількість риб: {max_fish}, температуру {self._temperature}")
+        max_fish = self.__water_level // 5
+        print (f"Акваріум має {self.__water_level} рівень води,висоту {self.__height} см, довжину {self.__width}см, ширину {self.__length}см, максимальну кількість риб: {max_fish}, температуру {self.__temperature}")
 
 
     
